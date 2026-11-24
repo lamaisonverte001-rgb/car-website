@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+:root {
+  /* 60% Canvas — Warm Architectural Alabaster & Elevated Surfaces */
+  --canvas: #f5f3ee;
+  --surface: #fdfcfa;
+  --surface-muted: #eae6dd;
+  --hairline: #dcd6ca;
+
+  /* Dark Showroom Stage — Obsidian Gallery */
+  --stage: #101215;
+  --stage-elevated: #171a1f;
+  --stage-border: #262a31;
+
+  /* 30% Ink — Graphite & Muted Slate */
+  --ink: #141518;
+  --ink-muted: #5a5d63;
+  --ink-subtle: #82858c;
+  --ink-ivory: #f4f1ea;
+  --ink-ivory-muted: #a6a9b0;
+
+  /* 10% Signature Accent — Racing Vermilion */
+  --accent: #c83e2b;
+  --accent-hover: #a93121;
+  --accent-soft: #f9ece9;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-hairline: var(--hairline);
+  --color-stage: var(--stage);
+  --color-stage-elevated: var(--stage-elevated);
+  --color-stage-border: var(--stage-border);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-ink-ivory: var(--ink-ivory);
+  --color-ink-ivory-muted: var(--ink-ivory-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--canvas);
+  color: var(--ink);
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Precision architectural hairline & numeric alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tactile underline sweep for editorial links */
+.editorial-link {
+  position: relative;
+}
+
+.editorial-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

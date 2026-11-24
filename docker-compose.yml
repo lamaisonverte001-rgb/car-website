@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: maison-veloce-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-veloce}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-veloce_secret_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-maison_veloce}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-veloce} -d ${POSTGRES_DB:-maison_veloce}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maison-veloce-web
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-veloce}:${POSTGRES_PASSWORD:-veloce_secret_2026}@postgres:5432/${POSTGRES_DB:-maison_veloce}
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+
+volumes:
+  postgres_data:
